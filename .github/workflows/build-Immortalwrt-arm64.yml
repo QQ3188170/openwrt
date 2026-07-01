@@ -45,12 +45,12 @@ jobs:
     - name: 检查项目分支
       uses: actions/checkout@main
       
-    - name: Setup variables
+    - name: 初始化变量
       run: |
         sudo timedatectl set-timezone "$TZ"
         echo "status=success" >> ${GITHUB_OUTPUT}
 
-    - name: Show system
+    - name: 显示系统信息
       run: |
         echo -e "\n\e[1;32mCPU:\e[0m"
         echo "$(grep 'model name' /proc/cpuinfo | head -1 | awk -F ': ' '{print $2}') ($(grep 'cpu MHz' /proc/cpuinfo | head -1 | awk -F ': ' '{print $2}')MHz) x $(grep processor /proc/cpuinfo  | wc -l)"
@@ -66,10 +66,10 @@ jobs:
         chmod +x $FREE_DISK_SH && $FREE_DISK_SH
         
 
-    - name: Build System Setup
+    - name: 设置系统环境
       uses: sbwml/actions@openwrt-build-setup
 
-    - name: Install LLVM
+    - name: 安装编译工具
       uses: sbwml/actions@install-llvm
 
     - name: 克隆固件源码
@@ -185,10 +185,10 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
    
-    - name: Set up Docker Buildx
+    - name: 设置 Docker Buildx
       uses: docker/setup-buildx-action@v3 
       
-    - name: Login to Docker Hub
+    - name: 登陆 Docker Hub
       uses: docker/login-action@v3
       with:
         username: ${{ secrets.DOCKER_USERNAME }}
