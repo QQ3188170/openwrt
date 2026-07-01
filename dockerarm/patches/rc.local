@@ -1,0 +1,22 @@
+# 1.修复在某些docker环境下网络卡顿的问题, 如果非必要请勿删除!
+cat > /etc/resolv.conf <<EOF
+search lan
+nameserver 127.0.0.1
+options ndots:0
+EOF
+
+# 2.旁路由关闭ICMP重定向(全局参数)
+sysctl -w net.ipv4.conf.all.send_redirects=0
+sysctl -w net.ipv4.conf.default.send_redirects=0
+
+# 3.旁路由关闭ICMP重定向(遍历接口)
+for iface in /proc/sys/net/ipv4/conf/*; do
+    echo 0 > "$iface/send_redirects"
+done
+
+#
+#
+# Put your custom commands here that should be executed once
+# the system init finished. By default this file does nothing.
+
+exit 0
