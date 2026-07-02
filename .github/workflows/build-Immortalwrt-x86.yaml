@@ -9,6 +9,8 @@
 #
 name: Build Immortalwrt-x86
 
+permissions: write-all
+
 on:
   workflow_dispatch:
   schedule:
